@@ -1,5 +1,13 @@
 lockfileVersion: '6.0'
 
+dependencies:
+  gsap:
+    specifier: file:gsap-bonus.tgz
+    version: file:gsap-bonus.tgz
+  lenis:
+    specifier: ^1.2.3
+    version: 1.2.3
+
 devDependencies:
   '@changesets/changelog-git':
     specifier: ^0.1.14
@@ -1887,6 +1895,21 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
+  /lenis@1.2.3:
+    resolution: {integrity: sha512-H3VUn62jvQPfyxGW2F0STJPhP1VzX5r05KtiZ0uxHYD9xtbfTvj2eX/Km26+x13zlaKfHacEe1DTC3ouFrxw+g==}
+    peerDependencies:
+      '@nuxt/kit': '>=3.0.0'
+      react: '>=17.0.0'
+      vue: '>=3.0.0'
+    peerDependenciesMeta:
+      '@nuxt/kit':
+        optional: true
+      react:
+        optional: true
+      vue:
+        optional: true
+    dev: false
+
   /levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
@@ -2926,3 +2949,9 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  file:gsap-bonus.tgz:
+    resolution: {integrity: sha512-lWXISP5Lbfj7GnCiAQApJsu8n0eVWzdyuIp8Yw0ON/CFH3vQn6eg4OlRnioQHR441FbrYJDKDKTB3sNx5fjo3w==, tarball: file:gsap-bonus.tgz}
+    name: gsap
+    version: 3.12.7
+    dev: false
