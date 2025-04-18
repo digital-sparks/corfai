@@ -7,20 +7,47 @@ gsap.registerPlugin(ScrollTrigger);
 window.Webflow ||= [];
 window.Webflow.push(() => {
   // Initialize a new Lenis instance for smooth scrolling
-  const lenis = new Lenis({ lerp: 0.15 });
 
-  // Synchronize Lenis scrolling with GSAP's ScrollTrigger plugin
-  lenis.on('scroll', ScrollTrigger.update);
-  // Add Lenis's requestAnimationFrame (raf) method to GSAP's ticker
-  // This ensures Lenis's smooth scroll animation updates on each GSAP tick
-  gsap.ticker.add((time) => {
-    lenis.raf(time * 1000); // Convert time from seconds to milliseconds
-  });
-  // Disable lag smoothing in GSAP to prevent any delay in scroll animations
-  gsap.ticker.lagSmoothing(0);
+  ('use strict'); // fix lenis in safari
+  let lenis;
+  if (Webflow.env('editor') === undefined) {
+    lenis = new Lenis({ lerp: 0.15 });
 
-  const footerIcon = document.querySelectorAll('.footer_icon');
-  gsap.set(footerIcon[1], { opacity: 0 });
+    // Synchronize Lenis scrolling with GSAP's ScrollTrigger plugin
+    lenis.on('scroll', ScrollTrigger.update);
+    // Add Lenis's requestAnimationFrame (raf) method to GSAP's ticker
+    // This ensures Lenis's smooth scroll animation updates on each GSAP tick
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000); // Convert time from seconds to milliseconds
+    });
+    // Disable lag smoothing in GSAP to prevent any delay in scroll animations
+    gsap.ticker.lagSmoothing(0);
+
+    const footerIcon = document.querySelectorAll('.footer_icon');
+    gsap.set(footerIcon[1], { opacity: 0 });
+
+    document.querySelectorAll('[data-lenis-start]').forEach((attribute) => {
+      attribute.addEventListener('click', () => {
+        lenis.start();
+      });
+    });
+
+    document.querySelectorAll('[data-lenis-stop]').forEach((attribute) => {
+      attribute.addEventListener('click', () => {
+        lenis.stop();
+      });
+    });
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      // Clear the previous timer
+      clearTimeout(resizeTimer);
+      // Set a new timer (300ms debounce)
+      resizeTimer = setTimeout(() => {
+        lenis.start();
+      }, 300);
+    });
+  }
 
   document.querySelectorAll('footer a').forEach((link) => {
     link.addEventListener('mouseenter', () => {
@@ -55,7 +82,7 @@ window.Webflow.push(() => {
       start: 'top bottom', // when the top of the trigger hits the top of the viewport
       end: 'bottom bottom', // end after scrolling 500px beyond the start
       //   toggleActions: 'play reverse play reverse',
-      markers: true,
+      //   markers: true,
       scrub: true,
     },
     y: '2rem',
@@ -113,7 +140,7 @@ window.Webflow.push(() => {
         .fromTo(icons[0], startPos0, {
           yPercent: -100,
           xPercent: 100,
-          duration: 0.3,
+          duration: 0.2,
           ease: 'power3.in',
         })
         .fromTo(
@@ -122,7 +149,7 @@ window.Webflow.push(() => {
           {
             yPercent: -100,
             xPercent: 0,
-            duration: 0.4,
+            duration: 0.3,
             ease: 'power3.out',
           },
           '<+0.2'
@@ -162,7 +189,7 @@ window.Webflow.push(() => {
         .to(icons[1], {
           yPercent: 100,
           xPercent: -100,
-          duration: 0.3,
+          duration: 0.2,
           ease: 'power3.in',
         })
         .to(
@@ -170,7 +197,7 @@ window.Webflow.push(() => {
           {
             yPercent: 0,
             xPercent: 0,
-            duration: 0.4,
+            duration: 0.3,
             ease: 'power3.out',
           },
           '<+0.2'

@@ -15,8 +15,9 @@ function initializeResourceAnimations(container = document) {
     if (!opacity || opacity === '1') return;
   }
 
-  container.querySelectorAll('.horizontal-image-wrap').forEach((thumbnail) => {
-    const image = thumbnail.querySelector('img');
+  container.querySelectorAll('.insights_article').forEach((article) => {
+    const thumbnail = article.querySelector('.horizontal-image-wrap img');
+
     gsap
       .timeline({
         scrollTrigger: {
@@ -28,7 +29,7 @@ function initializeResourceAnimations(container = document) {
           //   markers: true,
           onEnter: () => {
             gsap.fromTo(
-              image,
+              thumbnail,
               { scale: 1.15, opacity: 0 },
               {
                 ease: 'power.out',
@@ -41,20 +42,19 @@ function initializeResourceAnimations(container = document) {
         },
       })
       .fromTo(
-        image,
+        thumbnail,
         {
           yPercent: -5,
         },
         { yPercent: 5 }
       );
-  });
 
-  // Insights column animations
-  container.querySelectorAll('.insights_col-wrap').forEach((card) => {
-    //   const revealElement = card.querySelector('.reveal-element');
+    // Insights column animations
+
+    const card = article.querySelector('.insights_col-wrap');
     const title = card.querySelector('.heading-style-h3');
-    const description = card.querySelector('p');
-    const icon = card.querySelector('.icon-1x1-large');
+    const description = card.querySelector(' p');
+    const icon = card.querySelector(' .icon-1x1-large');
     let hasAnimated = false;
 
     let splitTitle = new SplitText(title, {
@@ -130,7 +130,7 @@ function initializeResourceAnimations(container = document) {
         '<-0.2'
       );
 
-    card.querySelectorAll('a:not(.button)').forEach((link) => {
+    article.querySelectorAll('a:not(.button)').forEach((link) => {
       link.addEventListener('mouseenter', () => {
         gsap
           .timeline()
@@ -151,16 +151,16 @@ function initializeResourceAnimations(container = document) {
               ease: 'power1.out',
             },
             '<'
+          )
+          .to(
+            thumbnail,
+            {
+              scale: 1.15,
+              duration: 0.5,
+              ease: 'power3.out',
+            },
+            '<'
           );
-        //   .to(
-        //     image,
-        //     {
-        //       scale: 1.05,
-        //       duration: 0.5,
-        //       ease: 'power3.out',
-        //     },
-        //     '<'
-        //   );
       });
       link.addEventListener('mouseleave', () => {
         gsap
@@ -181,20 +181,27 @@ function initializeResourceAnimations(container = document) {
               ease: 'power1.out',
             },
             '<'
+          )
+          .to(
+            thumbnail,
+            {
+              scale: 1.1,
+              duration: 0.5,
+              ease: 'power3.out',
+            },
+            '<'
           );
-        //   .to(
-        //     image,
-        //     {
-        //       scale: 1,
-        //       duration: 0.5,
-        //       ease: 'power3.out',
-        //     },
-        //     '<'
-        //   );
       });
     });
   });
 }
+
+window.Webflow ||= [];
+window.Webflow.push(() => {
+  document.fonts.ready.then(() => {
+    initializeResourceAnimations();
+  });
+});
 
 // For the FSAttributes integration
 window.fsAttributes = window.fsAttributes || [];
@@ -203,10 +210,7 @@ window.fsAttributes.push([
   (listInstances) => {
     const [listInstance] = listInstances;
     if (listInstance) {
-      initializeResourceAnimations();
       listInstance.on('renderitems', (renderedItems) => {
-        console.log(renderedItems);
-        // For newly rendered items, we need to get their container
         renderedItems.forEach((renderedItem) => {
           initializeResourceAnimations(renderedItem.element);
         });

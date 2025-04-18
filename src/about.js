@@ -11,100 +11,31 @@ window.Webflow ||= [];
 window.Webflow.push(() => {
   const h1Heading = document.querySelector('.heading-style-h0');
 
-  let splitH1Heading = new SplitText(h1Heading, {
-    type: 'words, lines',
-    linesClass: 'split-text_lines',
-  });
-
-  const subTitle = document.querySelector('.heading-style-h5');
-
-  let splitSubTitle = new SplitText(subTitle, {
-    type: 'chars',
-    linesClass: 'split-text_lines',
-  });
-
-  gsap.set('.heading-style-h5', { opacity: 0 });
-
-  gsap
-    .timeline()
-
-    .from('.section_hero-full-screen img:not(.logos_image)', {
-      duration: 2,
-      scale: 1.1,
-      ease: 'power1.out',
-    })
-    .from(
-      splitH1Heading.words,
-      {
-        yPercent: 100,
-        opacity: 0.3,
-        duration: 1,
-        rotateZ: 6,
-        transformOrigin: 'left bottom',
-        ease: 'power3.out',
-        stagger: function (index) {
-          return index * 0.165;
-        },
-        // delay: 1.5,
-      },
-      '<'
-    )
-    .fromTo(
-      '.section_hero-full-screen .reveal-element',
-      {
-        width: '100%',
-        scaleX: 0,
-      },
-      {
-        transformOrigin: 'center left',
-        ease: 'power2.inOut',
-        duration: 0.5,
-        scaleX: 1,
-      },
-      '>-0.25'
-    )
-    .to(
-      '.reveal-element',
-      {
-        onStart: () => {
-          gsap.set('.heading-style-h5', { opacity: 1 });
-        },
-        transformOrigin: 'center right',
-        ease: 'power2.out',
-        scaleX: 0,
-        duration: 0.5,
-        delay: 0.05,
-      },
-      '>'
-    );
-
-  document.querySelectorAll('.section_2col').forEach((section) => {
-    const heading = section.querySelector('.heading-style-h3');
-    const description = section.querySelectorAll('.w-richtext p');
-    const image = section.querySelector('.horizontal-image-wrap img');
-
-    let splitHeading = new SplitText(heading, {
+  document.fonts.ready.then(() => {
+    let splitH1Heading = new SplitText(h1Heading, {
       type: 'words, lines',
       linesClass: 'split-text_lines',
     });
 
-    let splitDescription = new SplitText(description, {
-      type: 'words, lines',
+    const subTitle = document.querySelector('.heading-style-h5');
+
+    let splitSubTitle = new SplitText(subTitle, {
+      type: 'chars',
       linesClass: 'split-text_lines',
     });
+
+    gsap.set('.heading-style-h5', { opacity: 0 });
 
     gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: 'center bottom',
-          end: 'bottom top',
-          //   markers: true,
-          //   toggleActions: 'play reverse play reverse',
-        },
+      .timeline()
+
+      .from('.section_hero-full-screen img:not(.logos_image)', {
+        duration: 2,
+        scale: 1.1,
+        ease: 'power1.out',
       })
       .from(
-        splitHeading.words,
+        splitH1Heading.words,
         {
           yPercent: 100,
           opacity: 0.3,
@@ -113,34 +44,105 @@ window.Webflow.push(() => {
           transformOrigin: 'left bottom',
           ease: 'power3.out',
           stagger: function (index) {
-            return index * 0.165; //+ (index >= 2 ? 0.85 : 0);
+            return index * 0.165;
           },
+          // delay: 1.5,
         },
         '<'
       )
-      .from(
-        image,
+      .fromTo(
+        '.section_hero-full-screen .reveal-element',
         {
-          ease: 'power.out',
-          scale: 1.05,
-          opacity: 0,
-          duration: 1,
+          width: '100%',
+          scaleX: 0,
         },
-        '<'
+        {
+          transformOrigin: 'center left',
+          ease: 'power2.inOut',
+          duration: 0.5,
+          scaleX: 1,
+        },
+        '>-0.25'
       )
-      .from(
-        splitDescription.lines,
+      .to(
+        '.reveal-element',
         {
-          opacity: 0,
-          yPercent: 40,
-          duration: 1,
-          ease: 'power3.out',
-          stagger: {
-            each: 0.01,
+          onStart: () => {
+            gsap.set('.heading-style-h5', { opacity: 1 });
           },
+          transformOrigin: 'center right',
+          ease: 'power2.out',
+          scaleX: 0,
+          duration: 0.5,
+          delay: 0.05,
         },
-        '<+0.3'
+        '>'
       );
+
+    document.querySelectorAll('.section_2col').forEach((section) => {
+      const heading = section.querySelector('.heading-style-h3');
+      const description = section.querySelectorAll('.w-richtext p');
+      const image = section.querySelector('.horizontal-image-wrap img');
+
+      let splitHeading = new SplitText(heading, {
+        type: 'words, lines',
+        linesClass: 'split-text_lines',
+      });
+
+      let splitDescription = new SplitText(description, {
+        type: 'words, lines',
+        linesClass: 'split-text_lines',
+      });
+
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: 'center bottom',
+            end: 'bottom top',
+            //   markers: true,
+            //   toggleActions: 'play reverse play reverse',
+          },
+        })
+        .from(
+          splitHeading.words,
+          {
+            yPercent: 100,
+            opacity: 0.3,
+            duration: 1,
+            rotateZ: 6,
+            transformOrigin: 'left bottom',
+            ease: 'power3.out',
+            stagger: function (index) {
+              return index * 0.165; //+ (index >= 2 ? 0.85 : 0);
+            },
+          },
+          '<'
+        )
+        .from(
+          image,
+          {
+            ease: 'power.out',
+            scale: 1.05,
+            opacity: 0,
+            duration: 1,
+          },
+          '<'
+        )
+        .from(
+          splitDescription.lines,
+          {
+            opacity: 0,
+            yPercent: 40,
+            duration: 1,
+            ease: 'power3.out',
+            stagger: {
+              each: 0.01,
+            },
+          },
+          '<+0.3'
+        );
+    });
 
     // ————— LOGO SLIDER MARQUEE ————— //
     document.querySelectorAll('.logos_wrapper').forEach((item, index) => {
