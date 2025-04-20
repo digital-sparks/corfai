@@ -176,41 +176,6 @@ window.Webflow.push(() => {
     });
     // ————— LOGO SLIDER MARQUEE ————— //
 
-    // .from(
-    //   '.contact_component .divider_component',
-    //   {
-    //     scaleX: (i, target) => (target.classList.contains('is-horizontal') ? 0 : 1),
-    //     scaleY: (i, target) => (target.classList.contains('is-horizontal') ? 1 : 0),
-    //     transformOrigin: (i, target) => {
-    //       const isHorizontal = target.classList.contains('is-horizontal');
-    //       return isHorizontal ? 'left center' : 'center top';
-    //     },
-    //     ease: 'power2.inOut',
-    //     duration: 1,
-    //   },
-    //   '<'
-    // )
-    // .from(
-    //   '.contact_component .text-size-xlarge, .contact_component .contact_col-2',
-    //   {
-    //     opacity: 0,
-    //     y: '1.5rem',
-    //     duration: 2,
-    //     ease: 'power3.out',
-    //     stagger: {
-    //       each: 0.1,
-    //     },
-    //   },
-    //   '<+0.35'
-    // )
-    // .from(
-    //   '.contact_icon-wrap',
-    //   {
-    //     opacity: 0,
-    //     duration: 2,
-    //     ease: 'power3.out',
-    //   },
-    //   '<'
-    // );
+
   });
 });
