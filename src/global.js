@@ -104,11 +104,11 @@ function setupLenisResize(lenis) {
  * Initialize footer animations
  */
 function initFooterAnimations() {
-  const footerIcon = document.querySelectorAll(SELECTORS.FOOTER_ICON);
-  if (!footerIcon.length) return;
+  const footerIcons = document.querySelectorAll(SELECTORS.FOOTER_ICON);
+  if (!footerIcons.length) return;
 
   // Set initial state
-  gsap.set(footerIcon[1], { opacity: 0 });
+  gsap.set(footerIcons[1], { opacity: 0 });
 
   // Footer scroll animation
   gsap.from(SELECTORS.FOOTER_WRAP, {
@@ -127,7 +127,7 @@ function initFooterAnimations() {
   // Footer link hover effects
   document.querySelectorAll(SELECTORS.FOOTER_LINKS).forEach((link) => {
     link.addEventListener('mouseenter', () => {
-      gsap.to(footerIcon, {
+      gsap.to(footerIcons, {
         x: '0.5rem',
         y: '-0.5rem',
         duration: 0.4,
@@ -140,7 +140,7 @@ function initFooterAnimations() {
     });
 
     link.addEventListener('mouseleave', () => {
-      gsap.to(footerIcon, {
+      gsap.to(footerIcons, {
         x: '0rem',
         y: '0rem',
         duration: 0.3,
