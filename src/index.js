@@ -264,6 +264,7 @@ function initTestimonialsAnimations() {
 
 function initSwiper() {
   const swiperCarousel = new Swiper('.testimonials-swiper_wrapper', {
+    modules: [Navigation, Mousewheel, Keyboard],
     wrapperClass: 'testimonials-swiper_list',
     slideClass: 'testimonials-swiper_slide',
     slidesPerView: 'auto',
