@@ -2,6 +2,8 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 /* The following plugin is a Club GSAP perk */
 import { SplitText } from 'gsap/SplitText';
+import Swiper from 'swiper';
+import { Navigation, Mousewheel, Keyboard } from 'swiper/modules';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -260,6 +262,83 @@ function initTestimonialsAnimations() {
   });
 }
 
+function initSwiper() {
+  const swiperCarousel = new Swiper('.testimonials-swiper_wrapper', {
+    wrapperClass: 'testimonials-swiper_list',
+    slideClass: 'testimonials-swiper_slide',
+    slidesPerView: 'auto',
+    direction: 'horizontal',
+    spaceBetween: 24,
+    grabCursor: true,
+    loop: false,
+    speed: 400,
+    a11y: true,
+    keyboard: {
+      enabled: true,
+      onlyInViewport: true,
+    },
+    mousewheel: {
+      enabled: true,
+      forceToAxis: true,
+      releaseOnEdges: true,
+    },
+    navigation: {
+      nextEl: '.swiper_button.is-next',
+      prevEl: '.swiper_button.is-prev',
+    },
+    breakpoints: {
+      786: {
+        slidesPerView: 2,
+        spaceBetween: 32,
+      },
+      1320: {
+        slidesPerView: 3,
+        spaceBetween: 32,
+      },
+    },
+    on: {
+      beforeInit: (swiper) => {
+        swiper.wrapperEl.style.gridColumnGap = 'unset';
+      },
+    },
+  });
+}
+
+function initPopupHandler() {
+  document.querySelectorAll('.testimonial_component .button').forEach((button, index) => {
+    button.addEventListener('click', function () {
+      const popup = document.querySelectorAll('.testimonial-popups_item .popup_component')[index];
+      gsap.fromTo(
+        popup,
+        {
+          opacity: 0,
+          display: 'none',
+        },
+        {
+          display: 'flex',
+          opacity: 1,
+          pointerEvents: 'auto',
+          ease: 'power1.out',
+          duration: 0.6,
+        }
+      );
+    });
+  });
+
+  document.querySelectorAll('.popup_closebutton, .popup_background').forEach((element) => {
+    element.addEventListener('click', function () {
+      const popup = element.closest('.popup_component');
+      gsap.to(popup, {
+        display: 'none',
+        opacity: 0,
+        pointerEvents: 'none',
+        ease: 'power1.out',
+        duration: 0.5,
+      });
+    });
+  });
+}
+
 // Initialize on Webflow page load
 window.Webflow ||= [];
 window.Webflow.push(() => {
@@ -267,6 +346,8 @@ window.Webflow.push(() => {
     initHeroAnimations();
     initWeHelpAnimations();
     initTestimonialsAnimations();
+    initSwiper();
+    initPopupHandler();
   });
 
   // Add resize listener

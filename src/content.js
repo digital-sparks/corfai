@@ -1,6 +1,5 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-/* The following plugin is a Club GSAP perk */
 import { SplitText } from 'gsap/SplitText';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -286,25 +285,17 @@ function handleResize() {
 
       // Clear the instances array
       splitInstances = [];
-
-      // Reinitialize animations
-      initAllAnimations();
     }
   }, 100);
-}
-
-// Main function to initialize all animations
-function initAllAnimations() {
-  document.fonts.ready.then(() => {
-    initHeroAnimations();
-    initArticleAnimations();
-  });
 }
 
 // Initialize on Webflow page load
 window.Webflow ||= [];
 window.Webflow.push(() => {
-  initAllAnimations();
+  document.fonts.ready.then(() => {
+    initHeroAnimations();
+    initArticleAnimations();
+  });
 
   // Add resize listener
   window.addEventListener('resize', handleResize);
